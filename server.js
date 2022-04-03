@@ -1,6 +1,8 @@
 const express = require('express');
 const path = require('path');
 const dotenv = require('dotenv');
+const passport = require('passport');
+const session = require('express-session');
 
 const app = express();
 
@@ -10,6 +12,26 @@ const adminRoutes = require('./routes/admin/OAuth/index');
 
 // Load config variable
 dotenv.config({ path: './config/config.env' });
+
+// Passport config
+require('./config/passport')(passport);
+
+// Session
+app.use(session({
+    secret: process.env.SECRET,
+    resave: false,
+    saveUninitialized: false
+}))
+
+// Setting Pasport Middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Set global variable
+app.use(function(req, res, next) {
+    res.locals.admin = req.admin || null
+    next();
+})
 
 // Connecting to the dabase
 const connectDB = require('./database/db');
