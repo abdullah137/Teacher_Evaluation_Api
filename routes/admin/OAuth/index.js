@@ -3,23 +3,32 @@ const router = express.Router();
 const passport = require('passport');
 
 router.get('/', (req, res) => {
-    console.log("Kindly Go Back to the routes page");
-    res.sendStatus(404).json({
+    
+    res.status(404).json({
         error: "UNKNOWN_ROUTES",
         status: false,
         message: "Oops 😓, You are acessing the wrong routes"
     })
 });
 
-router.get('/google/signup', passport.authenticate('google', { scope: ['profile'] }));
 
-router.get('/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
-    console.log("It has reach here");
+router.get('/google/signup', passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+router.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/auth/google/failure' }), (req, res) => {
+   
+    console.log(req.admin);
+    // Inserted Sucessfully
+    res.status(200).json({
+        message: "Account Created Successfully",
+        status: true,
+        admin: req.admin
+    })
+    return;
 });
 
 router.get('/logout', (req, res) => {
     req.logout();
-    res.sendStatus(200).json({
+    res.status(200).json({
         status: true,
         message: "Admin logged Out Successfully"
     });
