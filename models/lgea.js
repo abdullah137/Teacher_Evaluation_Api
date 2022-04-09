@@ -14,4 +14,4 @@ const localGovSchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('localGovernment', localGovSchema);
+module.exports = mongoose.model('lgea', localGovSchema);
