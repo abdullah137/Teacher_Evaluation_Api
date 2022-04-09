@@ -1,9 +1,8 @@
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
 // Loading Our Model
-const Admin = require('../models/admin/admin');
+const Admin = require('../models/admin');
 
 module.exports = function(passport) {
 
