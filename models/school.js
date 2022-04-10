@@ -16,7 +16,7 @@ const schoolSchema = new mongoose.Schema({
     insertedBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Staff',
-        required: true
+        required: false
     }
 });
 
