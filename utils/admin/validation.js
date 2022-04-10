@@ -54,9 +54,21 @@ const inspectorValidation = data => {
     return schema.validate(data);
 }
 
+// School Validation
+const schoolValidation = data => {
+
+    const schema = Joi.object({
+        name: Joi.string().required(),
+        lgea: Joi.string().required()
+    });
+
+    return schema.validate(data);
+}
+
 module.exports = { 
     registerValidation,
     loginValidation,
     lgeaValidation,
-    inspectorValidation
+    inspectorValidation,
+    schoolValidation
 }
