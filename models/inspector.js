@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const inspectorSchema = new mongoose.Schema({
     fistName: {
-        type: STring,
+        type: String,
         required: true
     },
     lastName: {
@@ -14,18 +14,16 @@ const inspectorSchema = new mongoose.Schema({
     },
     phone: {
         type: String,
-        required: true
     },
     schools: [
         {
             id: {
-                type: mongoose.Schema.Types.ObjectId,
+                type: Array,
                 ref: 'School',
                 required: true
             },
             name: {
-                type: String,
-                required: true,
+                type: Array,
             }
         }
     ],
