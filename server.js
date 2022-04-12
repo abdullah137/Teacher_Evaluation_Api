@@ -11,6 +11,7 @@ const indexRoutes = require('./routes/index');
 const adminRoutes = require('./routes/admin/OAuth/index');
 const adminLgeaRoutes = require('./routes/admin/lgea/index');
 const adminSchoolRoutes = require('./routes/admin/school/index');
+const adminInpectorRoutes = require('./routes/admin/inspector/index');
 
 // Load config variable
 dotenv.config({ path: './config/config.env' });
@@ -51,5 +52,6 @@ app.use(indexRoutes);
 app.use('/admin', adminRoutes);
 app.use('/admin/lgea', adminLgeaRoutes);
 app.use('/admin/school', adminSchoolRoutes);
+app.use('/admin/inspector', adminInpectorRoutes);
 
 app.listen(PORT, () => console.log(`Server Up 📢  and Running 🏃 on Port ${PORT}`))
