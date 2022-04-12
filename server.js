@@ -9,6 +9,8 @@ const app = express();
 // Importing our routes
 const indexRoutes = require('./routes/index');
 const adminRoutes = require('./routes/admin/OAuth/index');
+const adminLgeaRoutes = require('./routes/admin/lgea/index');
+const adminSchoolRoutes = require('./routes/admin/school/index');
 
 // Load config variable
 dotenv.config({ path: './config/config.env' });
@@ -47,5 +49,7 @@ const PORT = process.env.PORT || 5000
 // Router Middleware
 app.use(indexRoutes);
 app.use('/admin', adminRoutes);
+app.use('/admin/lgea', adminLgeaRoutes);
+app.use('/admin/school', adminSchoolRoutes);
 
 app.listen(PORT, () => console.log(`Server Up 📢  and Running 🏃 on Port ${PORT}`))
