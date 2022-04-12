@@ -322,7 +322,7 @@ router.delete('/:id', async(req, res) => {
             error: "INTERNAL_ERROR",
             status: false,
             message: error
-        })
+        });
         return;
     }
 
