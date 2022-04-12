@@ -5,11 +5,10 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 // importing the validation needed
-const { registerValidation, loginValidation, lgeaValidation } = require('../../../utils/admin/validation');
+const { registerValidation, loginValidation } = require('../../../utils/admin/validation');
 
 // Importing the models here
 const Admin = require('../../../models/admin');
-const Lgea = require('../../../models/lgea');
 
 router.get('/', (req, res) => {
     
@@ -88,7 +87,7 @@ router.get('/auth/google/callback', passport.authenticate('google',
   (req, res) => {
    
     // Inserted Sucessfully
-    res.status(200).json({
+    res.status(201).json({
         message: "Account Created Successfully",
         status: true,
         admin: req.admin
@@ -135,10 +134,9 @@ router.post('/signin', async (req, res) => {
     }
 
     // creating and assigning token
-    const token = jwt.sign({ _id: admin._id }, process.env.TOKEN_SECRET)
-    res.header('auth-token', token).send(token);
+    const token = jwt.sign({ _id: admin._id }, process.env.TOKEN_SECRET);
 
-    res.status(200).json({
+    res.header('auth-token', token).status(200).json({
         status: true,
         message: "Logged In",
         token
@@ -152,65 +150,6 @@ router.get('/logout', (req, res) => {
         status: true,
         message: "Admin logged Out Successfully"
     });
-});
-
-router.post('/add-lgea', async(req, res) => {
-
-    // get all the request body
-
-    let { name, color, image } = req.body;
-    // use joi to check
-
-    const { error } = lgeaValidation(req.body)
-
-    if(error) {
-        res.status(400).json({
-            error: "FIELD_REQUIREMENT",
-            status: false,
-            message: error.details[0].message,
-        })
-        return;
-    }
-
-
-    // use json to validate to ensure the user is loged in
-    
-    // check if the name alredy exist
-    let lgeaName = name.toLowerCase();
-    const lgeaExist =  await Lgea.findOne({name: lgeaName});
-
-
-    if(lgeaExist) {
-        res.status(400).json({
-            error: "LGEA_EXIST",
-            status: false,
-            message: "Oops, local governemnt already exist"
-        })
-        return;
-    }
-    // then insert the body
-    const lgea = Lgea({
-        name: lgeaName,
-        color: color,
-        image: image
-    });
-
-    try {
-        const insertLgea = await lgea.save();
-        res.status(200).send({
-            message: "INSERTED_SUCCESSFULLY",
-            status: true,
-            query: insertLgea
-        })
-        return;
-    }catch(error) {
-        res.send(500).json({
-            error: "INTERNAL_ERROR",
-            status: true,
-            message: error
-        })
-        return;
-    }
 });
 
 module.exports = router;
