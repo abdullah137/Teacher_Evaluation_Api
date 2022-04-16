@@ -47,6 +47,7 @@ const inspectorValidation = data => {
         lastName: Joi.string().required(),
         email: Joi.string().required().email(),
         phone: Joi.string(),
+        lgeaId: Joi.string().required(),
         schools: Joi.array().required()
     });
 
