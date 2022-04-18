@@ -48,7 +48,9 @@ const inspectorValidation = data => {
         email: Joi.string().required().email(),
         phone: Joi.string(),
         lgeaId: Joi.string().required(),
-        schools: Joi.array().required()
+        schools: Joi.array().required(),
+        password: Joi.string(),
+        profileImg: Joi.string(),
     });
 
     return schema.validate(data);
