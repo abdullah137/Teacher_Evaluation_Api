@@ -3,6 +3,7 @@ const path = require('path');
 const dotenv = require('dotenv');
 const passport = require('passport');
 const session = require('express-session');
+const morgan = require('morgan');
 
 const app = express();
 
@@ -44,6 +45,8 @@ connectDB();
 
 // Body-Parser
 app.use(express.json());
+app.use('/uploads/lgea', express.static(path.join(__dirname, 'uploads/')));
+app.use(morgan('dev'))
 
 const PORT = process.env.PORT || 5000
 
