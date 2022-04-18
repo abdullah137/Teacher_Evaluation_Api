@@ -1,6 +1,30 @@
 const express = require('express');
 const router = express.Router();
 const objectId = require('mongoose').Types.ObjectId;
+const multer = require('multer');
+
+const fileFilter = (req, res, cb) => {
+
+    // reject a file
+    if(file.mimetype === 'image/jpeg' || file.mimetype === "image/png" || file.mimetype === "image/jpg") { 
+         cb(null, true);
+    }else {
+        cb(null, false);
+    }
+
+}
+
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, './uploads/lgea')
+    },
+    filename: function(req, file, cb) {
+        cb(null, new Date().toISOString()+file.originalname);
+    }
+})
+
+const upload = multer({ 
+    storage: storage }, { fileFilter: fileFilter })
 
 // Loading the model
 const Lgea = require('../../../models/lgea');
@@ -65,7 +89,7 @@ router.get('/:id', async(req, res) => {
             return;
         } else {
 
-            res.status(200).send({
+            res.status(200).json({
                 message: "QUERY_SUCCESS",
                 status: true,
                 query: checkLgeaExist
@@ -85,7 +109,9 @@ router.get('/:id', async(req, res) => {
     }
 });
 
-router.post('/', async(req, res) => {
+router.post('/', upload.single('lgeaImage'), async(req, res) => {
+
+    console.log(req.file)
 
     // get all the request body
 
@@ -120,12 +146,12 @@ router.post('/', async(req, res) => {
     const lgea = Lgea({
         name: lgeaName,
         color: color,
-        image: image
+        image: req.file.path
     });
 
     try {
         const insertLgea = await lgea.save();
-        res.status(201).send({
+        res.status(201).json({
             message: "CREATED_SUCCESSFULLY",
             status: true,
             query: insertLgea
