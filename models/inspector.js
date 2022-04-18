@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const inspectorSchema = new mongoose.Schema({
-    fistName: {
+    firstName: {
         type: String,
         required: true
     },
@@ -15,12 +15,16 @@ const inspectorSchema = new mongoose.Schema({
     phone: {
         type: String,
     },
+    lgeaId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Lgea',
+        required: true
+    },
     schools: [
         {
             id: {
                 type: Array,
-                ref: 'School',
-                required: true
+                ref: 'School'
             },
             name: {
                 type: Array,
