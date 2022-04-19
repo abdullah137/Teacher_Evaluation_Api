@@ -22,6 +22,9 @@ const localGovSchema = new mongoose.Schema({
             },
             inspectors: {
                 type: Array
+            },
+            staffs: {
+                type: Array
             }
         }
     ]

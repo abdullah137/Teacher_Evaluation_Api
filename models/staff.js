@@ -4,7 +4,7 @@ const staffSchema = new mongoose.Schema({
         type: String,
         require: true
     },
-    fistName: {
+    firstName: {
         type: String,
         required: true
     },
@@ -16,13 +16,23 @@ const staffSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    email: {
+        type: String,
+        required: true,
+        lowercase: true,
+    },
     profileImg: {
         type: String,
         default: 'avatar.png'
     }, 
     password: {
-        type: String,
-        required: true
+        type: String
+    },
+    lgeas: {
+        type: Array
+    },
+    priveledges: {
+        type: Array
     }
 });
 
