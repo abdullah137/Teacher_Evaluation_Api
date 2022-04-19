@@ -98,11 +98,30 @@ const teacherValidation = data => {
     return schema.validate(data);
 }
 
+const staffValidaion = (data) => {
+
+    const schema = Joi.object({
+        firstName: Joi.string().required(),
+        lastName: Joi.string().required(),
+        phone: Joi.string().required(),
+        email: Joi.string().required().email(),
+        profileImg: Joi.string(),
+        password: Joi.string(),
+        lgeas: Joi.array().required(),
+        priveledges: Joi.array().items(Joi.valid("Add_Teacher", "Edit_Teacher", "Delete_Teacher", "Download_Report",
+        "Generate_Code", "Inspect_Teacher", "Edit_Evaluation", "View_Teacher", "Add_School", "View_School", "Edit_School",
+        "Add_Inspector", "Edit_Inspector", "Delete_Inspector", "Attendance"))
+    });
+
+    return schema.validate(data);
+}
+
 module.exports = { 
     registerValidation,
     loginValidation,
     lgeaValidation,
     inspectorValidation,
     schoolValidation,
-    teacherValidation
+    teacherValidation,
+    staffValidaion
 }
