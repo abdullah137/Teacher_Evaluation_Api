@@ -2,11 +2,13 @@ const express = require('express');
 const router = express.Router();
 const objectId = require('mongoose').Types.ObjectId;
 const bcrypt = require('bcrypt');
+const { v4: uuidv4 } = require('uuid');
 
 // Loading the models
 const Teacher = require('../../../models/teacher');
 const Inspector = require('../../../models/inspector');
 const School = require('../../../models/school');
+const Lgea = require('../../../models/lgea');
 
 // importing the validation needed for this as well
 const { teacherValidation } = require('../../../utils/admin/validation');
@@ -20,7 +22,7 @@ router.get('/', async (req, res) => {
 
         const teacher = await Teacher.find({});
 
-        res.status(200).status({
+        res.status(200).json({
             message: "QUERY_SUCCESS",
             status: true,
             query: teacher
@@ -29,7 +31,7 @@ router.get('/', async (req, res) => {
         return;
     }catch(error) {
 
-        res.send(500).json({
+        res.status(500).json({
             error: "INTERNAL_ERROR",
             status: false,
             message: error
@@ -39,7 +41,7 @@ router.get('/', async (req, res) => {
 
 });
 
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
 
     // check to see fi the admin is logged in
     // some code will be inserted here
@@ -87,15 +89,121 @@ router.get('/:id', (req, res) => {
     }
 });
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
+    // ensuring that admin is logged in for this
+    // putting osme block of code here
 
+    // get all body requests
+    const { lgeaId, schoolId, firstName, lastName, otherName, gender, phone, email, dob, position, yearsOfExperience, gradeLevel, 
+    discipline, qualification, category, mathSpecial, status, barcode, password } = req.body;
+
+    // validating the error
+    const { error } = teacherValidation(req.body);
+
+    if(error) {
+        res.status(400).json({
+            error: "FIELD_REQUIREMENT",
+            status: false,
+            message: error.details[0].message
+        });
+        return;
+    }
+
+    // check if the lgeaId is valid
+    if(!objectId.isValid(lgeaId)) {
+        res.status(400).json({
+            error: "INVALID_ID",
+            status: false,
+            messege: "Sorry, You've just entered an invalid LGEA ID"
+        });
+        return;
+    }
+    // check if the lgeadId exist
+    const _l = await Lgea.find({ _id: lgeaId });
+
+    if( _l ) {
+        res.status(404).json({
+            error: "NONE_EXISTENCE",
+            status: false,
+            message: "Sorry, LGEA ID does not exist"
+        });
+        return;
+    }
+
+    // check if the schoolId is valid
+    if(!objectId.isValid(schoolId)) {
+        res.status(400).json({
+            error: "INVALID_ID",
+            status: false,
+            messege: "Sorry, You've just entered an invalid School ID"
+        });
+        return;
+    }
+
+    // check if the school Id exist
+    const _s = await School.find({ _id: schoolId })
+
+    // generate teacher'sId using uuid
+    if( !_s ) {
+        res.status(400).json({
+            error: "NONE_EXISTENCE",
+            status: false,
+            message: "Sorry, the school does not exist"
+        });
+        return;
+    }
+    
+    // check if the phone is aldeady registered
+
+    const _p = await Teacher.find({ phone: phone });
+
+    if( _p) {
+        res.status(400).json({
+            error: "ALREADY_REGISTERED",
+            status: false,
+            message: "Sorry, the user is already registered using that phone number"
+        });
+        return;
+    }
+
+    const _e = await Teacher.find({ email: email });
+    
+    if( _e ) {
+        res.status(400).json({
+            error: "ALREADY_REGISTERED",
+            status: false,
+            message: "Sorry, the user is already registered using that email"
+        });
+        return;
+    }
+
+    // get all inspectors in that table assiged to the person
+
+    // hashing password
+    const salt = await bcrypt.genSalt(10);
+    const hashPassword = await bcrypt.hash(password, salt);
+
+    // then insert
+    const teacher = Teacher({
+        adminId: new mongoose.Types.ObjectId(req.admin.id),
+        lgeaId: new mongoose.Types.ObjectId(lgeaId),
+        schoolId: new mongoose.Types.ObjectId(schoolId),
+        firstName: firstName, lastName: lastName, otherName: otherName,
+        gender: gender, phone: phone, email: email, dob: dob, 
+        position:position, yearsOfExperience:yearsOfExperience, gradeLevel:gradeLevel, 
+    discipline:discipline, qualification:qualification, category:category, mathSpecial:mathSpecial, status:status,
+        password: hashPassword
+    });
+
+    // saving the teacher into the database
+    const save = teacher.save();
 });
 
 router.put('/:id', (req, res) => {
 
 });
 
-router.delete('/:id)', (req, res) => {
+router.delete('/:id', async (req, res) => {
 
     // check to see if the admin is logged in
     // put some code here
@@ -131,7 +239,12 @@ router.delete('/:id)', (req, res) => {
         // some task will be performed here for teachers on lgea
         // some task too will be performed on school too as well
     }catch(error) {
-
+        console.log(error)
+        res.status(500).json({
+            error: "INTERNAL_ERROR",
+            status: false,
+            message: "Sorry, An Internal Error Occured"
+        })
     }
 });
 
