@@ -322,16 +322,20 @@ router.put('/:id', async(req, res)=> {
         }
         
        // get exist inspector information
-       let getInfo = await Inspector.findOne({ email: inspectorEmail }); 
+       let inspectorInfo = await Inspector.findOne({ email: inspectorEmail }); 
 
-       console.log(getInfo);
-
+       // get local goverment id
+       const id = inspectorInfo.lgeaId;
+       
+       // find again by id
+       // request for help on this
+       const lgea_id = await Lgea.find({"_id":id});
+       
        // Initialing the array 
        const failure = [];
        const success = [];
         
        // hash password
-    
 
        const data = await Inspector.findByIdAndUpdate({ 
            _id: req.params.id
@@ -348,16 +352,15 @@ router.put('/:id', async(req, res)=> {
                 "schools.0.name": []
             }
         });
-
         
-        if(lgeaId != getInfo.id){
+        if(lgeaId != lgea_id[0].id){
             // updating the lgea model
             const lgea = await Lgea.findByIdAndUpdate({ _id: lgeaId }, {
                     $push: {
-                        "otherInfo.0.inspectors": req.params.id
+                        "otherInfo.0.inspectors": lgeaId
                     }, 
                     $pull: {
-                        "otherInfo.0.inspectors":  getInfo.id
+                        "otherInfo.0.inspectors":  req.params.id
                     }
             });
         }
@@ -482,7 +485,7 @@ router.delete('/:id', async(req, res) => {
              // pull lgea
              var inspector =  deleteInspector.id ;
 
-        // insert onto the lgea
+        // remove onto the lgea
         const lgeaInspector = await Lgea.findByIdAndUpdate({ _id: lgeaId },
               {
                $pull: {
