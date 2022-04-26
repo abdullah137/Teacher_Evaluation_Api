@@ -73,7 +73,6 @@ const teacherValidation = data => {
     const schema = Joi.object({
         lgeaId: Joi.string().required(),
         schoolId: Joi.string().required(),
-        teacherId: Joi.string().required(),
         firstName: Joi.string().required(),
         lastName: Joi.string().required(),
         otherName: Joi.string(),
@@ -87,10 +86,10 @@ const teacherValidation = data => {
         gradeLevel: Joi.number().required(),
         discipline: Joi.string().required(),
         qualification: Joi.string().required(),
-        class: Joi.string().required(),
+        category: Joi.string().required(),
         mathSpecial: Joi.string().required,
         status: Joi.number().valid(1,2),
-        baarcode: Joi.string(),
+        barcode: Joi.string(),
         barcodeProperty: Joi.string(),
         password: Joi.string()
     });
