@@ -31,6 +31,17 @@ const inspectorSchema = new mongoose.Schema({
             }
         }
     ],
+    teachers: [
+        {
+            id: {
+                type: Array,
+                ref: 'Teacher'
+            },
+            name: {
+                type: Array
+            }
+        }
+    ],
     password: {
         type: String,
         required: true
