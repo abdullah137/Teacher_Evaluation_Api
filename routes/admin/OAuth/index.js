@@ -7,7 +7,7 @@ const { _home, login, signup, googleOauthController, logout } = require('../../.
 
 router.get('/', _home);
 
-router.post('/signup', login)
+router.post('/signup', signup)
 
 router.get('/google/signup', passport.authenticate('google', {
      scope: ['profile', 'email'] }));
@@ -16,7 +16,7 @@ router.get('/auth/google/callback', passport.authenticate('google',
  { failureRedirect: '/auth/google/failure' }),
    googleOauthController);
 
-router.post('/signin', signup);
+router.post('/signin',login);
 
 router.get('/logout', logout);
 
