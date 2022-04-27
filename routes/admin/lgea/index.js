@@ -5,6 +5,9 @@ const multer = require('multer');
 // Importing the controllers
 const { _getAll, _getSpecific, _insert, _delete, _update }  = require('../../../controllers/admin/lgea/index');
 
+// Token Verfication
+const { auth } = require('../../../middleware/jwtAuth');
+
 // multer filter
 const fileFilter = (req, res, cb) => {
 
@@ -30,7 +33,7 @@ const storage = multer.diskStorage({
 const upload = multer({ 
     storage: storage }, { fileFilter: fileFilter })
 
-router.get('/', _getAll);
+router.get('/', auth, _getAll);
 
 router.get('/:id', _getSpecific);
 

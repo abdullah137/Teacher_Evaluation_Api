@@ -125,14 +125,17 @@ const login = async (req, res) => {
     }
 
     // creating and assigning token
-    const token = jwt.sign({ _id: admin._id }, process.env.TOKEN_SECRET);
+     jwt.sign({ _id: admin._id }, process.env.TOKEN_SECRET,  { expiresIn: '2h' }, (err, token) => {
+        
+        res.header('beep-auth-token', token).status(200).json({
+            status: true,
+            message: "Logged In",
+            token
+        })
+        return;
+        
+    });
 
-    res.header('auth-token', token).status(200).json({
-        status: true,
-        message: "Logged In",
-        token
-    })
-    return;
 }
 
 const logout = (req, res) => {
