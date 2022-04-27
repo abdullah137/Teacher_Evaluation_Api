@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const passport = require('passport');
 const session = require('express-session');
 const morgan = require('morgan');
+const cors = require('cors');
 
 const app = express();
 
@@ -52,7 +53,24 @@ app.use(morgan('dev'))
 
 const PORT = process.env.PORT || 5000
 
-// All Routes
+// enabling cors restriction
+var whitelist = ['http://localhost:3000', 'http://127.0.0.1:3000'];
+
+// Setting the cors configurations
+app.use(cors({
+
+  origin: whitelist,
+  methods: ["PATCH","PUT","GET","DELETE","POST", "OPTIONS"],
+  allowedHeaders: ['Content-Type', 'Authorization','Apptoken','Origin',
+  'X-Requested-With','Accept','Access-Control-Allow-Credential'],
+  exposedHeaders: ['Content-Range', 'X-Content-Range'],
+  maxAge: 86400,
+  credentials: true
+})
+
+);
+
+// Index Routes
 app.use(indexRoutes);
 
 // Admin Routes 
