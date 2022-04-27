@@ -1,7 +1,6 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-
 // importing the validation needed
 const { registerValidation, loginValidation } = require('../../../utils/admin/validation');
 
