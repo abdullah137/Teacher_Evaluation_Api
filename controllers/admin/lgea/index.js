@@ -6,7 +6,6 @@ const Lgea = require('../../../models/lgea');
 // importing the validation needed
 const { lgeaValidation } = require('../../../utils/admin/validation');
 
-
 const _getAll = async(req, res) => {
     
     // check to see if the admin is loggedIn
