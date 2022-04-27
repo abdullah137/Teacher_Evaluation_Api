@@ -52,13 +52,23 @@ app.use(morgan('dev'))
 
 const PORT = process.env.PORT || 5000
 
-// Router Middleware
+// All Routes
 app.use(indexRoutes);
+
+// Admin Routes 
 app.use('/admin', adminRoutes);
 app.use('/admin/lgea', adminLgeaRoutes);
 app.use('/admin/school', adminSchoolRoutes);
 app.use('/admin/inspector', adminInpectorRoutes);
 app.use('/admin/staff', adminStaffRoutes);
 app.use('/admin/teacher', adminTeacherRoutes);
+
+// 404 Error Handler
+app.all('*', (req, res) => {
+  res.status(404).json({
+    status: false,
+    error: 'And Just Like That, You Completely Lost Your Way 😥',
+  });
+});
 
 app.listen(PORT, () => console.log(`Server Up 📢  and Running 🏃 on Port ${PORT}`))
