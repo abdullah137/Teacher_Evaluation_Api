@@ -33,14 +33,14 @@ const storage = multer.diskStorage({
 const upload = multer({ 
     storage: storage }, { fileFilter: fileFilter })
 
-router.get('/', auth, _getAll);
+router.get('/', _getAll);
 
-router.get('/:id', _getSpecific);
+router.get('/:id', auth, _getSpecific);
 
-router.post('/', upload.single('lgeaImage'), _insert);
+router.post('/', auth, upload.single('lgeaImage'), _insert);
 
-router.put('/:id', upload.single('lgeaImage'), _update);
+router.put('/:id', auth, upload.single('lgeaImage'), _update);
 
-router.delete('/:id', _delete);
+router.delete('/:id', auth, _delete);
 
 module.exports = router;

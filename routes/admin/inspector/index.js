@@ -1,16 +1,20 @@
 const express = require('express');
 const router = express.Router();
 
+// Importing the controllers
 const {  _getAll, _getSpecific, _insert, _update, _delete } = require('../../../controllers/admin/inspector/index');
 
-router.get('/', _getAll);
+// Importing Token verfication
+const { auth } = require('../../../middleware/jwtAuth');
 
-router.get('/:id', _getSpecific)
+router.get('/', auth, _getAll);
 
-router.post('/', _insert);
+router.get('/:id', auth, _getSpecific)
 
-router.put('/:id', _update);
+router.post('/', auth, _insert);
 
-router.delete('/:id', _delete);
+router.put('/:id', auth, _update);
+
+router.delete('/:id', auth, _delete);
 
 module.exports = router;
