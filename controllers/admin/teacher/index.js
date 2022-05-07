@@ -89,7 +89,7 @@ const _getSpecific =  async (req, res) => {
 
 const _insert = async (req, res) => {
     // ensuring that admin is logged in for this
-    // putting osme block of code here
+    // putting some block of code here
 
     // get all body requests
     const { lgeaId, schoolId, firstName, lastName, otherName, gender, phone, email, dob, position, yearsOfExperience, gradeLevel, 
