@@ -10,12 +10,12 @@ const schoolSchema = new mongoose.Schema({
     },
     lgeaId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Lgea',
+        ref: 'lgea',
         required: true
     },
     insertedBy: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Staff',
+        ref: 'staff',
         required: false
     }
 });
