@@ -6,7 +6,7 @@ const teacherSchema = new mongoose.Schema({
    },
    lgeaId: {
        type: mongoose.Schema.Types.ObjectId,
-       ref: 'Lgea',
+       ref: 'lgea',
        required: true
    },
    schoolId: {
