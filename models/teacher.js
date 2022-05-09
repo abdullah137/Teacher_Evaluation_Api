@@ -46,10 +46,6 @@ const teacherSchema = new mongoose.Schema({
        type: Date,
        required: true
    },
-   lgea: {
-       type: String,
-       required: true
-   },
    position: {
        type: String,
        required: true,
