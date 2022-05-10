@@ -114,6 +114,41 @@ const staffValidaion = (data) => {
     return schema.validate(data);
 }
 
+const evaluationValidation = (data) => {
+
+    const schema = Joi.object({
+        inspectorId: Joi.string().required(),
+        teacherId: Joi.string().required(),
+        schoolId: Joi.string().required(),
+        eval_1: Joi.string().required(),
+        m_1: Joi.number().required(),
+        eval_2: Joi.string().required(),
+        m_2: Joi.number().required(),
+        eval_3: Joi.string().required(),
+        m_3: Joi.string().required(),
+        eval_4: Joi.string().required(),
+        m_4: Joi.string().required(),
+        eval_5: Joi.string().required(),
+        m_5: Joi.number().required(),
+        eval_6: Joi.string().required(),
+        m_6: Joi.number().required(),
+        eval_7: Joi.string().required(),
+        m_7: Joi.number().required(),
+        eval_8: Joi.string().required(),
+        m_8: Joi.number().required(),
+        eval_9: Joi.string().required(),
+        m_9: Joi.number().required(),
+        totalStudent: Joi.number().required(),
+        evaluation: Joi.number().required(),
+        subject: Joi.string().required(),
+        duration: Joi.string().required(),
+        total: Joi.number().required(),
+        rating: Joi.number().required(),
+        comment: Joi.string().required()
+    });
+
+    return schema.validate(data);
+}
 module.exports = { 
     registerValidation,
     loginValidation,
@@ -121,5 +156,6 @@ module.exports = {
     inspectorValidation,
     schoolValidation,
     teacherValidation,
-    staffValidaion
+    staffValidaion,
+    evaluationValidation
 }
