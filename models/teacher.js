@@ -97,13 +97,12 @@ const teacherSchema = new mongoose.Schema({
    },
    inspect: [
        { 
+           evaluationId: {
+                type: Array,
+                ref: 'evaluation'
+           },
             evaluationNumber: {
-                type: Number
-            },
-            evaluationStatus: {
-                type: Number,
-                enum: [0, 1],
-                default: 0
+                type: Array
             }
        }
    ]
