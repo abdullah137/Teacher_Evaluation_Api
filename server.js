@@ -17,6 +17,9 @@ const adminInpectorRoutes = require('./routes/admin/inspector/index');
 const adminStaffRoutes = require('./routes/admin/staff/index');
 const adminTeacherRoutes = require('./routes/admin/teacher/index');
 
+// Importing our routes
+const inspectorRoutes = require('./routes/inspector/authentication/index')
+
 // Load config variable
 dotenv.config({ path: './config/config.env' });
 
@@ -80,6 +83,10 @@ app.use('/admin/school', adminSchoolRoutes);
 app.use('/admin/inspector', adminInpectorRoutes);
 app.use('/admin/staff', adminStaffRoutes);
 app.use('/admin/teacher', adminTeacherRoutes);
+
+
+// Inspector Routes
+app.use('/inspector', inspectorRoutes);
 
 // 404 Error Handler
 app.all('*', (req, res) => {
