@@ -16,6 +16,7 @@ const adminSchoolRoutes = require('./routes/admin/school/index');
 const adminInpectorRoutes = require('./routes/admin/inspector/index');
 const adminStaffRoutes = require('./routes/admin/staff/index');
 const adminTeacherRoutes = require('./routes/admin/teacher/index');
+const adminEvaluationRoutes = require('./routes/admin/evaluation/index');
 
 // Importing our routes
 const inspectorRoutes = require('./routes/inspector/authentication/index')
@@ -83,7 +84,7 @@ app.use('/admin/school', adminSchoolRoutes);
 app.use('/admin/inspector', adminInpectorRoutes);
 app.use('/admin/staff', adminStaffRoutes);
 app.use('/admin/teacher', adminTeacherRoutes);
-
+app.use('/admin/evaluation', adminEvaluationRoutes);
 
 // Inspector Routes
 app.use('/inspector', inspectorRoutes);
