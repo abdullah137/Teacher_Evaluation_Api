@@ -355,15 +355,14 @@ const _delete = async (req, res) => {
 
     }
             
-        // some task will be performed here for teachers on lgea
-        // some task too will be performed on school too as well
     }catch(error) {
         console.log(error)
         res.status(500).json({
             error: "INTERNAL_ERROR",
             status: false,
             message: "Sorry, An Internal Error Occured"
-        })
+        });
+        return;
     }
 }
 
