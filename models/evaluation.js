@@ -5,16 +5,16 @@ const evaluationSchema = new mongoose.Schema({
     inspectorId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Inspector',
-        required: true
+        required: false
+    },
+    staffId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: false,
+        ref: 'Staff'
     },
     teacherId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Teacher',
-        required: true
-    },
-    schoolId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'School',
         required: true
     },
     eval_1: {
@@ -112,9 +112,9 @@ const evaluationSchema = new mongoose.Schema({
         required: true
     },
     evaluation: {
-        type: Number,
+        type: String,
         required: true,
-        enum: [ 1, 2, 3, 4, 5, 6 ]
+        enum: [ "first", "second", "third", "fourth", "fifth", "sixth"]
     },
     subject: {
         type: String,
@@ -129,7 +129,7 @@ const evaluationSchema = new mongoose.Schema({
         required: true
     },
     rating: {
-        type: Number,
+        type: String,
         required: true
     }, 
     comment: {
@@ -147,7 +147,7 @@ const evaluationSchema = new mongoose.Schema({
         default: Date.now
     },
     approvedBy: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Staff'
     },
     approveDate: {
