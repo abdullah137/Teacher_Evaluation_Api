@@ -60,8 +60,16 @@ const login =  async(req, res) => {
     
 }
 
-const resetPassword = async(req, res) => {
-    console.log("It is here now");
+const logout = async(req, res) => {
+
 }
 
-module.exports = { login, resetPassword }
+const resetPassword = async(req, res) => {
+    
+    // getting insepctor email
+    const { email } = req.body;
+    
+    console.log(req.body);
+}
+
+module.exports = { logout, login, resetPassword }
