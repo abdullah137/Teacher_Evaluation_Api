@@ -20,6 +20,8 @@ const adminEvaluationRoutes = require('./routes/admin/evaluation/index');
 
 // Importing our routes
 const inspectorRoutes = require('./routes/inspector/authentication/index')
+const inspectorTeacherRoutes = require('./routes/inspector/teachers/index');
+const inspectorEvalutationRoutes = require('./routes/inspector/evaluation/index');
 
 // Load config variable
 dotenv.config({ path: './config/config.env' });
@@ -41,6 +43,7 @@ app.use(passport.session());
 // Set global variable
 app.use(function(req, res, next) {
     res.locals.admin = req.admin || null
+    res.locals.inspector = req.inspector || null
     next();
 })
 
@@ -88,6 +91,8 @@ app.use('/admin/evaluation', adminEvaluationRoutes);
 
 // Inspector Routes
 app.use('/inspector', inspectorRoutes);
+app.use('/inspector/teachers', inspectorTeacherRoutes)
+app.use('/inspector/evaluation', inspectorEvalutationRoutes)
 
 // 404 Error Handler
 app.all('*', (req, res) => {
