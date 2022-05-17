@@ -242,7 +242,7 @@ const _delete = async(req, res) => {
 
         if(!checkLgeaExist) {
 
-            res.status(400).json({
+            res.status(404).json({
                 error: "NONE_EXISTENCE",
                 status: false,
                 message: "Sorry, the local government do not exist"

@@ -12,7 +12,7 @@ module.exports = function(passport) {
         callbackURL: '/admin/auth/google/callback'
     }, async(accessToken, refreshToken, profile, done) => {
 
-
+        console.log(profile);
         const randomOtp = Math.floor(Math.random()*90000)+10000;
     
         const newAdmin = {
