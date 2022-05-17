@@ -139,11 +139,13 @@ const login = async (req, res) => {
 }
 
 const logout = (req, res) => {
-    req.logout();
+    req.admin = null;
     res.status(200).json({
         status: true,
-        message: "Admin logged Out Successfully"
+        message: "LOGOUT_SUCCESSFULLY",
+        data: {}
     });
+    return;
 }
 
 module.exports = { logout, login, signup, googleOauthController, _home }
