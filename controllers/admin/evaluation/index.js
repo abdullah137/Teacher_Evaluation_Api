@@ -144,6 +144,8 @@ const _insert = async(req, res) => {
     // checking if the admin is logged
     // put some block of code here
 
+    const admin = req.admin;
+
     // get all body request
     const { inspectorId, teacherId,
     eval_1, m_1, eval_2, m_2, eval_3, m_3,
@@ -184,7 +186,7 @@ const _insert = async(req, res) => {
                     res.status(404).json({
                         error: "NONE_EXISTENCE",
                         status: false,
-                        message: "Sorry, LGEA ID does not exist"
+                        message: "Sorry, Teacher does not exist"
                     });
                     return;
                 }
@@ -289,40 +291,38 @@ const _delete = async(req, res) => {
 
         // Check to see if the id exist
         const checkEvaluation = await Evaluation.find({ _id: req.params.id} ).populate('Teacher');
+        if(!checkEvaluation) {
 
-        console.log(checkEvaluation);
-    //     if(!checkEvaluation) {
+            res.status(404).json({
+                error: "NONE_EXISTENCE",
+                status: false,
+                message: "Sorry, the evaluation do not exist"
+            });
+            return;
+        }
 
-    //         res.status(404).json({
-    //             error: "NONE_EXISTENCE",
-    //             status: false,
-    //             message: "Sorry, the evaluation do not exist"
-    //         });
-    //         return;
-    //     }
-
-    //      const deleteEvaluation = await Evaluation.findByIdAndDelete({ _id: req.params.id });
+         const deleteEvaluation = await Evaluation.findByIdAndDelete({ _id: req.params.id });
 
          
-    //      // Updating the info about the teacher
-    //      const updateEvaluation = await Teacher.findByIdAndUpdate(req.params.id, {
-    //         $pull: {
-    //             "inspect.0.evaluationId": query._id,
-    //             "inspect.0.evaluationNumber": query.evaluation,
-    //         }
-    //     });
+         // Updating the info about the teacher
+         const updateEvaluation = await Teacher.findByIdAndUpdate(req.params.id, {
+            $pull: {
+                "inspect.0.evaluationId": query._id,
+                "inspect.0.evaluationNumber": query.evaluation,
+            }
+        });
 
 
-    // if(deleteEvaluation && updateEvaluation) {
+    if(deleteEvaluation && updateEvaluation) {
         
-    //     res.status(200).send({
-    //         message: "DELETE_SUCCESS",
-    //         status: true,
-    //         query: deleteEvaluation
-    //     })
-    //     return;
+        res.status(200).send({
+            message: "DELETE_SUCCESS",
+            status: true,
+            query: deleteEvaluation
+        })
+        return;
 
-    // }
+    }
 
     }catch(error) {
 
